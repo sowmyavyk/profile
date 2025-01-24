@@ -1,10 +1,10 @@
 services:
   - type: web
-    name: user-profile-api
-    env: java
+    name: profile-service
+    env: docker
+    dockerfilePath: ./Dockerfile
     buildCommand: ./mvnw clean package
     startCommand: java -jar target/profile-0.0.1-SNAPSHOT.jar
-    
     envVars:
       - key: DB_URL
         value: jdbc:mysql://mydb.render.com:3306/mess_management
