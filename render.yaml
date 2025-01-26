@@ -5,11 +5,11 @@ services:
     dockerfilePath: ./Dockerfile
     envVars:
       - key: DB_HOST
-        value: jdbc:mysql://mydb.render.com:3306/mess_management
+        value: mydb.render.com
       - key: DB_PORT
         value: 3306
       - key: DB_NAME
-        value: profile
+        value: mess_management
       - key: DB_USER
         value: root
       - key: DB_PASSWORD
