@@ -1,13 +1,15 @@
 services:
   - type: web
-    name: profile-service
+    name: profile-app
     env: docker
     dockerfilePath: ./Dockerfile
-    buildCommand: ./mvnw clean package
-    startCommand: java -jar target/profile-0.0.1-SNAPSHOT.jar
     envVars:
-      - key: DB_URL
+      - key: DB_HOST
         value: jdbc:mysql://mydb.render.com:3306/mess_management
+      - key: DB_PORT
+        value: 3306
+      - key: DB_NAME
+        value: <your-database-name>
       - key: DB_USER
         value: root
       - key: DB_PASSWORD
