@@ -7,7 +7,7 @@ services:
       - key: DB_HOST
         value: mydb.render.com
       - key: DB_PORT
-        value: 3306
+        value: 3307
       - key: DB_NAME
         value: mess_management
       - key: DB_USER
