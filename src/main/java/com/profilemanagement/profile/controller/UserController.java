@@ -12,10 +12,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // Login Endpoint
+    // Login Endpoint (Updated to accept JSON body)
     @PostMapping("/login")
-    public String login(@RequestParam String rollNumber, @RequestParam String password, @RequestParam String group) {
-        User user = userService.login(rollNumber, password, group);
+    public String login(@RequestBody User loginRequest) {
+        User user = userService.login(loginRequest.getRollNumber(), loginRequest.getPassword(), loginRequest.getGroup());
         if (user != null) {
             return "Login successful! Welcome " + user.getName() + " from " + user.getGroup();
         }
