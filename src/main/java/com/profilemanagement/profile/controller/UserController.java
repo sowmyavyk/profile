@@ -14,18 +14,18 @@ public class UserController {
 
     // Login Endpoint
     @PostMapping("/login")
-    public String login(@RequestParam String rollNumber, @RequestParam String password) {
-        User user = userService.login(rollNumber, password);
+    public String login(@RequestParam String rollNumber, @RequestParam String password, @RequestParam String group) {
+        User user = userService.login(rollNumber, password, group);
         if (user != null) {
-            return "Login successful! Welcome " + user.getName();
+            return "Login successful! Welcome " + user.getName() + " from " + user.getGroup();
         }
-        return "Invalid roll number or password!";
+        return "Invalid roll number, password, or group!";
     }
 
     // Get User Profile Endpoint
-    @GetMapping("/profile/{rollNumber}")
-    public User getUserProfile(@PathVariable String rollNumber) {
-        return userService.getUserByRollNumber(rollNumber);
+    @GetMapping("/profile/{rollNumber}/{group}")
+    public User getUserProfile(@PathVariable String rollNumber, @PathVariable String group) {
+        return userService.getUserByRollNumberAndGroup(rollNumber, group);
     }
 
     // Update User Profile Endpoint

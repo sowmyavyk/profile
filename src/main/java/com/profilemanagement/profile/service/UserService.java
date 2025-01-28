@@ -11,17 +11,17 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User login(String rollNumber, String password) {
-        // Find user by roll number and plain-text password
-        return userRepository.findByRollNumberAndPassword(rollNumber, password);
+    public User login(String rollNumber, String password, String group) {
+        // Find user by roll number, password, and group
+        return userRepository.findByRollNumberAndPasswordAndGroup(rollNumber, password, group);
     }
 
-    public User getUserByRollNumber(String rollNumber) {
-        return userRepository.findByRollNumber(rollNumber);
+    public User getUserByRollNumberAndGroup(String rollNumber, String group) {
+        return userRepository.findByRollNumberAndGroup(rollNumber, group);
     }
 
     public User updateUserProfile(User updatedUser) {
-        User existingUser = userRepository.findByRollNumber(updatedUser.getRollNumber());
+        User existingUser = userRepository.findByRollNumberAndGroup(updatedUser.getRollNumber(), updatedUser.getGroup());
         if (existingUser != null) {
             existingUser.setName(updatedUser.getName());
             if (updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()) {

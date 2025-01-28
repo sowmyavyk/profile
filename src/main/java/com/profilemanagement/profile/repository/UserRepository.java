@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findByRollNumberAndPassword(String rollNumber, String password);
-    User findByRollNumber(String rollNumber);
+    User findByRollNumberAndPasswordAndGroup(String rollNumber, String password, String group);
+    User findByRollNumberAndGroup(String rollNumber, String group);
 }
