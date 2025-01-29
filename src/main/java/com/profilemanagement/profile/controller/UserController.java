@@ -2,8 +2,13 @@ package com.profilemanagement.profile.controller;
 
 import com.profilemanagement.profile.entity.User;
 import com.profilemanagement.profile.service.UserService;
+
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -14,13 +19,26 @@ public class UserController {
 
     // Login Endpoint
     @PostMapping("/login")
-    public String login(@RequestParam String rollNumber, @RequestParam String password, @RequestParam String group) {
+    public ResponseEntity<Map<String, String>> login(@RequestBody Map<String, String> requestBody) {
+        String rollNumber = requestBody.get("rollNumber");
+        String password = requestBody.get("password");
+        String group = requestBody.get("group");
+
         User user = userService.login(rollNumber, password, group);
+        Map<String, String> response = new HashMap<>();
+
         if (user != null) {
-            return "Login successful! Welcome " + user.getName() + " from " + user.getGroup();
+            response.put("status", "success");
+            response.put("message", "Login successful!");
+            response.put("name", user.getName());
+            response.put("group", user.getGroup());
+            return ResponseEntity.ok(response);
+        } else {
+            response.put("status", "error");
+            response.put("message", "Invalid roll number, password, or group!");
+            return ResponseEntity.status(401).body(response);
         }
-        return "Invalid roll number, password, or group!";
-    }
+}
 
     // Get User Profile Endpoint
     @GetMapping("/profile/{rollNumber}/{group}")
