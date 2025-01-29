@@ -17,9 +17,8 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // Login Endpoint (Updated to accept JSON body)
+    // Login Endpoint
     @PostMapping("/login")
-<<<<<<< HEAD
     public ResponseEntity<Map<String, String>> login(@RequestBody Map<String, String> requestBody) {
         String rollNumber = requestBody.get("rollNumber");
         String password = requestBody.get("password");
@@ -28,10 +27,6 @@ public class UserController {
         User user = userService.login(rollNumber, password, group);
         Map<String, String> response = new HashMap<>();
 
-=======
-    public String login(@RequestBody User loginRequest) {
-        User user = userService.login(loginRequest.getRollNumber(), loginRequest.getPassword(), loginRequest.getGroup());
->>>>>>> e88e64ccb433389f494baccce3ea2c4b7a8e30df
         if (user != null) {
             response.put("status", "success");
             response.put("message", "Login successful!");
