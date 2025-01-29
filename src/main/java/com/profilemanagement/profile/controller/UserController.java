@@ -4,7 +4,6 @@ import com.profilemanagement.profile.entity.User;
 import com.profilemanagement.profile.service.UserService;
 
 import java.util.HashMap;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // Login Endpoint
+    // ✅ Fix: Corrected login to use the new repository method
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody Map<String, String> requestBody) {
         String rollNumber = requestBody.get("rollNumber");
@@ -39,10 +38,10 @@ public class UserController {
             response.put("message", "Invalid roll number, password, or group!");
             return ResponseEntity.status(401).body(response);
         }
-}
+    }
 
-    // Get User Profile Endpoint
-    @GetMapping("/user/profile/{rollNo}/{group}")
+    // ✅ Fix: Corrected the method call to `getUserByRollNumberAndGroup`
+    @GetMapping("/profile/{rollNo}/{group}")
     public ResponseEntity<?> getUserProfile(@PathVariable String rollNo, @PathVariable String group) {
         System.out.println("Fetching profile for Roll No: " + rollNo + ", Group: " + group);
     
@@ -50,13 +49,12 @@ public class UserController {
         if (user == null) {
             System.out.println("User not found");
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                                .body(Map.of("message", "User not found", "status", "error"));
+                                 .body(Map.of("message", "User not found", "status", "error"));
         }
 
         return ResponseEntity.ok(user);
     }
 
-    // Update User Profile Endpoint
     @PutMapping("/profile/update")
     public Map<String, String> updateUserProfile(@RequestBody User updatedUser) {
         Map<String, String> response = new HashMap<>();

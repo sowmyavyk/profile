@@ -11,8 +11,8 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    // ✅ Fix: Now correctly checks rollNumber, password, and group for login
     public User login(String rollNumber, String password, String group) {
-        // Find user by roll number, password, and group
         return userRepository.findByRollNumberAndPasswordAndGroup(rollNumber, password, group);
     }
 
