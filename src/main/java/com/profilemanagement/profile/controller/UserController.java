@@ -48,11 +48,16 @@ public class UserController {
 
     // Update User Profile Endpoint
     @PutMapping("/profile/update")
-    public String updateUserProfile(@RequestBody User updatedUser) {
+    public Map<String, String> updateUserProfile(@RequestBody User updatedUser) {
+        Map<String, String> response = new HashMap<>();
         User user = userService.updateUserProfile(updatedUser);
         if (user != null) {
-            return "Profile updated successfully!";
+            response.put("status", "success");
+            response.put("message", "Profile updated successfully!");
+        } else {
+            response.put("status", "error");
+            response.put("message", "User not found!");
         }
-        return "User not found!";
+        return response;
     }
 }
