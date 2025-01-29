@@ -6,6 +6,7 @@ import com.profilemanagement.profile.service.UserService;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
@@ -41,9 +42,18 @@ public class UserController {
 }
 
     // Get User Profile Endpoint
-    @GetMapping("/profile/{rollNumber}/{group}")
-    public User getUserProfile(@PathVariable String rollNumber, @PathVariable String group) {
-        return userService.getUserByRollNumberAndGroup(rollNumber, group);
+    @GetMapping("/user/profile/{rollNo}/{group}")
+    public ResponseEntity<?> getUserProfile(@PathVariable String rollNo, @PathVariable String group) {
+        System.out.println("Fetching profile for Roll No: " + rollNo + ", Group: " + group);
+    
+        User user = userService.getUserByRollNumberAndGroup(rollNo, group);
+        if (user == null) {
+            System.out.println("User not found");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                .body(Map.of("message", "User not found", "status", "error"));
+        }
+
+        return ResponseEntity.ok(user);
     }
 
     // Update User Profile Endpoint
